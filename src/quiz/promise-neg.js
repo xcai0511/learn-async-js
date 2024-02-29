@@ -8,9 +8,12 @@ function negsPerRow(arr, rowIdx) {
     return new Promise((resolve, reject) => {
         if (arr.length > rowIdx) {
             setTimeout(() => {
-                arr[rowIdx].filter((e) => {
-                    return e < 0;
-                }).length > 0 ? resolve(`Found Evidence: ${arr[rowIdx]}`) : resolve
+                const negs = arr[rowIdx].filter(e => e < 0);
+                if (negs.length > 0) {
+                    resolve(`Found Evidence: ${negs}`);
+                } else {
+                    resolve(`Row ${rowIdx} has no negative numbers.`);
+                }
             }, 0);
         } else {
             reject(`Row Index ${rowIdx} must be within 0 and ${arr.length}`);
