@@ -19,17 +19,29 @@ function sumOfRow(arr, rowIdx) {
     })
 }
 
-rowSumPromises = [];
-for (let x = 0; x < array2D.length; x++) {
-    rowSumPromises.push(sumOfRow(array2D, x));
+// rowSumPromises = [];
+// for (let x = 0; x < array2D.length; x++) {
+//     rowSumPromises.push(sumOfRow(array2D, x));
+// }
+//
+// Promise.all(rowSumPromises)
+//     .then((rowSums) => {
+//         let sum = 0;
+//         rowSums.forEach(rowSum => {
+//             sum += rowSum;
+//         });
+//         console.log(`Sum = ${sum}`);
+//     })
+//     .catch((error) => console.log(`Error Msg: ${error}`));
+async function calculateTotalSum(array2D) {
+    try {
+        const rowSumPromises = array2D.map((_, idx) => sumOfRow(array2D, idx));
+        const rowSums = await Promise.all(rowSumPromises);
+        const totalSum = rowSums.reduce((acc, curr) => acc + curr, 0);
+        console.log(`Sum = ${totalSum}`);
+    } catch (error) {
+        console.log(`Error Msg: ${error}`);
+    }
 }
 
-Promise.all(rowSumPromises)
-    .then((rowSums) => {
-        let sum = 0;
-        rowSums.forEach(rowSum => {
-            sum += rowSum;
-        });
-        console.log(`Sum = ${sum}`);
-    })
-    .catch((error) => console.log(`Error Msg: ${error}`));
+calculateTotalSum(array2D);
